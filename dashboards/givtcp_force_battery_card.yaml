@@ -1,0 +1,35 @@
+type: horizontal-stack
+cards:
+  - show_name: true
+    show_icon: true
+    type: button
+    icon: mdi:battery-charging
+    theme: Frosted Glass Dark Lite
+    show_state: true
+    name: 1 Hour Charge
+    tap_action:
+      action: perform-action
+      perform_action: script.force_charge_battery
+      target: {}
+  - show_name: true
+    show_icon: true
+    type: button
+    icon: mdi:battery-arrow-down
+    theme: Frosted Glass Dark Lite
+    show_state: true
+    name: 1 Hour Discharge
+    tap_action:
+      action: perform-action
+      perform_action: script.force_discharge_battery
+      target: {}
+  - show_name: true
+    show_icon: true
+    type: button
+    icon: mdi:cancel
+    theme: Frosted Glass Dark Lite
+    show_state: true
+    name: Cancel
+    tap_action:
+      action: perform-action
+      perform_action: script.cancel_force_charge_or_discharge
+      target: {}

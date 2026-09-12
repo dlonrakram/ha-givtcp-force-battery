@@ -1,0 +1,35 @@
+script:
+  force_charge_battery:
+    alias: Force Charge Battery
+    icon: mdi:battery-charging
+    sequence:
+      - action: select.select_option
+        target:
+          entity_id: select.givtcp_ce1234g001_force_charge
+        data:
+          option: "60"
+
+  force_discharge_battery:
+    alias: Force Discharge Battery
+    icon: mdi:battery-arrow-down
+    sequence:
+      - action: select.select_option
+        target:
+          entity_id: select.givtcp_ce1234g001_force_export
+        data:
+          option: "60"
+
+  cancel_force_charge_or_discharge:
+    alias: Cancel Force Charge or Discharge
+    icon: mdi:cancel
+    sequence:
+      - action: select.select_option
+        target:
+          entity_id: select.givtcp_ce1234g001_force_charge
+        data:
+          option: "Cancel"
+      - action: select.select_option
+        target:
+          entity_id: select.givtcp_ce1234g001_force_export
+        data:
+          option: "Cancel"
