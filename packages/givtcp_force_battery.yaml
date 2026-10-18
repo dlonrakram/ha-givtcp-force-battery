@@ -40,13 +40,13 @@ script:
             sequence:
               - action: select.select_option
                 target:
-                  entity_id: select.givtcp_ce1234g001_force_charge
+                  entity_id: select.givtcp_ce2224g002_force_charge
                 data:
                   option: "{{ minutes }}"
         default:
           - action: number.set_value
             target:
-              entity_id: number.givtcp_ce1234g001_force_charge_num
+              entity_id: number.givtcp_ce2224g002_force_charge_num
             data:
               value: "{{ minutes }}"
 
@@ -80,13 +80,13 @@ script:
             sequence:
               - action: select.select_option
                 target:
-                  entity_id: select.givtcp_ce1234g001_force_export
+                  entity_id: select.givtcp_ce2224g002_force_export
                 data:
                   option: "{{ minutes }}"
         default:
           - action: number.set_value
             target:
-              entity_id: number.givtcp_ce1234g001_force_export_num
+              entity_id: number.givtcp_ce2224g002_force_export_num
             data:
               value: "{{ minutes }}"
 
@@ -96,11 +96,11 @@ script:
     sequence:
       - action: select.select_option
         target:
-          entity_id: select.givtcp_ce1234g001_force_charge
+          entity_id: select.givtcp_ce2224g002_force_charge
         data:
           option: "Cancel"
       - action: select.select_option
         target:
-          entity_id: select.givtcp_ce1234g001_force_export
+          entity_id: select.givtcp_ce2224g002_force_export
         data:
           option: "Cancel"
