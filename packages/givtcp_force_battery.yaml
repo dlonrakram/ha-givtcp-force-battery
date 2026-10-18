@@ -1,35 +1,106 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Inverter serial — change this one line only.
+# It is used by every script below through a YAML anchor.
+# Entity IDs are lower-cased automatically.
+# ─────────────────────────────────────────────────────────────────────────────
 script:
   force_charge_battery:
     alias: Force Charge Battery
     icon: mdi:battery-charging
+    variables:
+      inverter_serial: &inverter_serial "CE1234G001"
+    fields:
+      hours:
+        name: Duration
+        description: Optional duration in hours. Defaults to the dashboard slider.
+        required: false
+        selector:
+          number:
+            min: 0.25
+            max: 4
+            step: 0.25
+            unit_of_measurement: h
     sequence:
-      - action: select.select_option
-        target:
-          entity_id: select.givtcp_ce1234g001_force_charge
-        data:
-          option: "60"
+      - variables:
+          duration_hours: >-
+            {{ hours | default(states('input_number.force_duration_hours') | float(1), true) }}
+          minutes: >-
+            {{ (duration_hours | float(1) * 60) | round(0) | int }}
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: >-
+                  {{ minutes <= 180
+                     and minutes in [2, 5, 10, 15, 30, 45, 60, 75, 90,
+                                     105, 120, 135, 150, 165, 180] }}
+            sequence:
+              - action: select.select_option
+                target:
+                  entity_id: "select.givtcp_{{ inverter_serial | lower }}_force_charge"
+                data:
+                  option: "{{ minutes }}"
+        default:
+          - action: number.set_value
+            target:
+              entity_id: "number.givtcp_{{ inverter_serial | lower }}_force_charge_num"
+            data:
+              value: "{{ minutes }}"
 
   force_discharge_battery:
     alias: Force Discharge Battery
     icon: mdi:battery-arrow-down
+    variables:
+      inverter_serial: *inverter_serial
+    fields:
+      hours:
+        name: Duration
+        description: Optional duration in hours. Defaults to the dashboard slider.
+        required: false
+        selector:
+          number:
+            min: 0.25
+            max: 4
+            step: 0.25
+            unit_of_measurement: h
     sequence:
-      - action: select.select_option
-        target:
-          entity_id: select.givtcp_ce1234g001_force_export
-        data:
-          option: "60"
+      - variables:
+          duration_hours: >-
+            {{ hours | default(states('input_number.force_duration_hours') | float(1), true) }}
+          minutes: >-
+            {{ (duration_hours | float(1) * 60) | round(0) | int }}
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: >-
+                  {{ minutes <= 180
+                     and minutes in [2, 5, 10, 15, 30, 45, 60, 75, 90,
+                                     105, 120, 135, 150, 165, 180] }}
+            sequence:
+              - action: select.select_option
+                target:
+                  entity_id: "select.givtcp_{{ inverter_serial | lower }}_force_export"
+                data:
+                  option: "{{ minutes }}"
+        default:
+          - action: number.set_value
+            target:
+              entity_id: "number.givtcp_{{ inverter_serial | lower }}_force_export_num"
+            data:
+              value: "{{ minutes }}"
 
   cancel_force_charge_or_discharge:
     alias: Cancel Force Charge or Discharge
     icon: mdi:cancel
+    variables:
+      inverter_serial: *inverter_serial
     sequence:
       - action: select.select_option
         target:
-          entity_id: select.givtcp_ce1234g001_force_charge
+          entity_id: "select.givtcp_{{ inverter_serial | lower }}_force_charge"
         data:
           option: "Cancel"
       - action: select.select_option
         target:
-          entity_id: select.givtcp_ce1234g001_force_export
+          entity_id: "select.givtcp_{{ inverter_serial | lower }}_force_export"
         data:
           option: "Cancel"
