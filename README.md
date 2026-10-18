@@ -24,10 +24,10 @@ auto-creates via MQTT discovery:
 
 | Entity | Purpose |
 | --- | --- |
-| `select.givtcp_ce2224g002_force_charge` | Force charge using GivTCP's preset durations (2–180 minutes) |
-| `select.givtcp_ce2224g002_force_export` | Force discharge/export using the same preset durations |
-| `number.givtcp_ce2224g002_force_charge_num` | Force charge for any duration up to 240 minutes |
-| `number.givtcp_ce2224g002_force_export_num` | Force discharge/export for any duration up to 240 minutes |
+| `select.givtcp_ce1234g001_force_charge` | Force charge using GivTCP's preset durations (2–180 minutes) |
+| `select.givtcp_ce1234g001_force_export` | Force discharge/export using the same preset durations |
+| `number.givtcp_ce1234g001_force_charge_num` | Force charge for any duration up to 240 minutes |
+| `number.givtcp_ce1234g001_force_export_num` | Force discharge/export for any duration up to 240 minutes |
 
 Durations up to 180 minutes use the `select` entities. Durations from
 181–240 minutes (3.25–4 hours) use the `number` entities, because GivTCP's
@@ -39,11 +39,15 @@ Durations up to 180 minutes use the `select` entities. Durations from
   and Home Assistant's MQTT integration picking up the entities above.
 - A recent GivTCP version that creates the `*_force_charge_num` and
   `*_force_export_num` number entities. If you don't see them, update GivTCP.
-- **Confirm your own entity IDs first** — go to
+- **Set your inverter serial once** — at the top of
+  `packages/givtcp_force_battery.yaml`, change the `inverter_serial` YAML anchor
+  from the placeholder `CE1234G001` to your own serial. All three scripts use
+  that single value, and the entity IDs are lower-cased automatically.
+  `CE1234G001` in this repo is a mock, not a real inverter.
+- **Confirm your own entity IDs** — go to
   **Settings → Devices & Services → Entities**, search "force", and check the
-  serial number matches. `CE2224G002` below is this inverter's serial; if you
-  ever swap the inverter or dongle, update it in
-  `packages/givtcp_force_battery.yaml`.
+  serial matches your inverter. If you swap the inverter or dongle, update the
+  one `inverter_serial` line.
 
 ## Install / restore steps
 
@@ -55,7 +59,8 @@ Durations up to 180 minutes use the `select` entities. Durations from
    ```
 
 2. Copy `packages/givtcp_force_battery.yaml` into your HA config's
-   `packages/` folder.
+   `packages/` folder, then set `inverter_serial` at the top to your own
+   inverter serial.
 
 3. **Developer Tools → YAML → Reload Scripts, Groups and Automations**
    (or just restart Home Assistant). This also creates the new
