@@ -1,35 +1,102 @@
-type: horizontal-stack
+type: vertical-stack
 cards:
-  - show_name: true
-    show_icon: true
-    type: button
-    icon: mdi:battery-charging
+  - type: entities
+    title: Force Charge / Discharge
     theme: Frosted Glass Dark Lite
-    show_state: true
-    name: 1 Hour Charge
-    tap_action:
-      action: perform-action
-      perform_action: script.force_charge_battery
-      target: {}
-  - show_name: true
-    show_icon: true
-    type: button
-    icon: mdi:battery-arrow-down
-    theme: Frosted Glass Dark Lite
-    show_state: true
-    name: 1 Hour Discharge
-    tap_action:
-      action: perform-action
-      perform_action: script.force_discharge_battery
-      target: {}
-  - show_name: true
-    show_icon: true
-    type: button
-    icon: mdi:cancel
-    theme: Frosted Glass Dark Lite
-    show_state: true
-    name: Cancel
-    tap_action:
-      action: perform-action
-      perform_action: script.cancel_force_charge_or_discharge
-      target: {}
+    entities:
+      - entity: input_number.force_duration_hours
+        name: Duration
+        icon: mdi:timer-outline
+  - type: horizontal-stack
+    cards:
+      - show_name: true
+        show_icon: true
+        show_state: false
+        type: button
+        icon: mdi:clock-outline
+        theme: Frosted Glass Dark Lite
+        name: 1 h
+        tap_action:
+          action: perform-action
+          perform_action: input_number.set_value
+          target:
+            entity_id: input_number.force_duration_hours
+          data:
+            value: 1
+      - show_name: true
+        show_icon: true
+        show_state: false
+        type: button
+        icon: mdi:clock-outline
+        theme: Frosted Glass Dark Lite
+        name: 2 h
+        tap_action:
+          action: perform-action
+          perform_action: input_number.set_value
+          target:
+            entity_id: input_number.force_duration_hours
+          data:
+            value: 2
+      - show_name: true
+        show_icon: true
+        show_state: false
+        type: button
+        icon: mdi:clock-outline
+        theme: Frosted Glass Dark Lite
+        name: 3 h
+        tap_action:
+          action: perform-action
+          perform_action: input_number.set_value
+          target:
+            entity_id: input_number.force_duration_hours
+          data:
+            value: 3
+      - show_name: true
+        show_icon: true
+        show_state: false
+        type: button
+        icon: mdi:clock-outline
+        theme: Frosted Glass Dark Lite
+        name: 4 h
+        tap_action:
+          action: perform-action
+          perform_action: input_number.set_value
+          target:
+            entity_id: input_number.force_duration_hours
+          data:
+            value: 4
+  - type: horizontal-stack
+    cards:
+      - show_name: true
+        show_icon: true
+        show_state: false
+        type: button
+        icon: mdi:battery-charging
+        theme: Frosted Glass Dark Lite
+        name: Charge
+        tap_action:
+          action: perform-action
+          perform_action: script.force_charge_battery
+          target: {}
+      - show_name: true
+        show_icon: true
+        show_state: false
+        type: button
+        icon: mdi:battery-arrow-down
+        theme: Frosted Glass Dark Lite
+        name: Discharge
+        tap_action:
+          action: perform-action
+          perform_action: script.force_discharge_battery
+          target: {}
+      - show_name: true
+        show_icon: true
+        show_state: false
+        type: button
+        icon: mdi:cancel
+        theme: Frosted Glass Dark Lite
+        name: Cancel
+        tap_action:
+          action: perform-action
+          perform_action: script.cancel_force_charge_or_discharge
+          target: {}
